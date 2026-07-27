@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Inter } from "next/font/google";
+import { AuthSync } from "@/components/auth-sync";
 import "./globals.css";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-display" });
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark">
       <body className={`${outfit.variable} ${inter.variable} min-h-dvh`}>
+        <AuthSync />
         {children}
       </body>
     </html>

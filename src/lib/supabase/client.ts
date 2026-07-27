@@ -33,6 +33,15 @@ export async function ensureSession() {
   const { data } = await sb.auth.getSession();
   if (data.session) return data.session;
   const { data: anon, error } = await sb.auth.signInAnonymously();
-  if (error) throw error;
+  if (error) {
+    // Most common cause: the "Anonymous" provider is disabled in the Supabase
+    // dashboard. Surface a clear message instead of the raw API error.
+    if (error.message.toLowerCase().includes("anonymous")) {
+      throw new Error(
+        "Anonymous sign-in is disabled. Enable the Anonymous provider in your Supabase dashboard (Authentication → Providers) so guests can create & join rooms.",
+      );
+    }
+    throw error;
+  }
   return anon.session;
 }

@@ -37,7 +37,7 @@ export default function LoginPage() {
     setStatus("loading");
     const { error } = await sb.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}${BASE_PATH}/` },
+      options: { redirectTo: `${window.location.origin}${BASE_PATH}/auth/callback` },
     });
     if (error) {
       setErrorMsg(error.message);
@@ -51,7 +51,7 @@ export default function LoginPage() {
     setStatus("loading");
     const { error } = await sb.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}${BASE_PATH}/` },
+      options: { emailRedirectTo: `${window.location.origin}${BASE_PATH}/auth/callback` },
     });
     if (error) {
       setErrorMsg(error.message);
