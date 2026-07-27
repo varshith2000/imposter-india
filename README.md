@@ -12,7 +12,7 @@ A premium, mobile-first, real-time multiplayer social deduction party game built
 
 - 🎴 **Secret word gameplay** — everyone gets the same Indian word, imposters get nothing
 - 🗳️ **Host-controlled voting** — only the room host decides when discussion ends
-- 🇮🇳 **26 Indian categories** — Bollywood, IPL, street food, festivals, mythology, ISRO & more
+- 🇮🇳 **37 Indian categories** — a huge Tollywood (Telugu cinema) pack, plus Bollywood, IPL, street food, festivals, mythology, ISRO & more
 - 🤖 **Practice Mode** — fully offline vs AI bots (no setup needed!)
 - 🌐 **Online rooms** — realtime multiplayer via Supabase (4–15 players, 1–3 imposters)
 - ⚡ **Full progression** — XP, coins, 100+ levels, achievements, streaks, daily challenges
@@ -34,17 +34,24 @@ Open http://localhost:3000 — **Practice Mode works instantly**, no configurati
 ## 🌐 Enable Online Multiplayer (Supabase)
 
 1. Create a free project at [supabase.com](https://supabase.com)
-2. In the SQL Editor, run **`supabase/schema.sql`** (tables, RLS, RPCs, realtime)
-3. Enable **Anonymous sign-ins**: Authentication → Providers → Anonymous
-4. (Optional) Enable Google OAuth: Authentication → Providers → Google
+2. In the SQL Editor, run these in order:
+   - **`supabase/schema.sql`** — tables, RLS, RPCs, realtime
+   - **`supabase/seed.sql`** — categories & words (auto-generated)
+   - **`supabase/seed-unlockables.sql`** — achievements & shop unlockables
+3. Enable **Anonymous sign-ins**: Authentication → Sign In Providers → Anonymous
+4. (Optional) Enable Google/email OAuth: Authentication → Sign In Providers → Google / Email
 5. Copy `.env.local.example` → `.env.local` and fill in:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+# The publishable (anon) key — a long ~200-char JWT, NOT the project name
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=eyJhbGciOi...
 ```
 
 6. Restart the dev server. Create Room / Join Room now work in realtime!
+
+> Editing categories? Edit `src/lib/data/categories.ts`, then regenerate the
+> SQL seed with `node scripts/generate-seed.cjs`.
 
 ## 🏗️ Architecture
 
@@ -61,7 +68,7 @@ src/
 │   ├── game/             # WordReveal, Discussion, Voting, GameOver
 │   └── effects/          # Confetti (India colors)
 ├── lib/
-│   ├── data/             # 26 categories + words, XP/levels/achievements
+│   ├── data/             # 37 categories + words, XP/levels/achievements
 │   ├── game/             # Pure engine (roles, tally, winner, rewards)
 │   ├── supabase/         # Browser client (graceful offline degradation)
 │   ├── profile.ts        # Local-first player profile (localStorage)
@@ -82,13 +89,35 @@ Home → Create/Join Room → Lobby → Host starts → Secret words → Discuss
 **Host presses 🗳️ Start Voting** → Secret votes → Dramatic reveal → Elimination →
 Next round or Game Over → XP/coins/achievements → **Play Again** (instant restart)
 
-## 📦 Deploy to Vercel
+## 📦 Deploy to GitHub Pages (free, static)
+
+This app is a fully static export — perfect for GitHub Pages. A workflow is
+included (`.github/workflows/deploy.yml`) that builds and publishes on every
+push to `main`.
+
+**One-time setup:**
+
+1. Push the project to a GitHub repo (public for free Pages).
+2. Add **Repository Secrets** (Settings → Secrets and variables → Actions → New repository secret):
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+3. Enable Pages: Settings → Pages → **Source: GitHub Actions**.
+4. Push to `main`. The workflow builds with `GITHUB_PAGES=true` and deploys.
+
+Your site goes live at `https://<your-username>.github.io/<repo-name>/`.
+The base path is set automatically from the repo name.
+
+> **Custom domain or `user.github.io` repo?** Open `next.config.mjs` and set
+> `NEXT_PUBLIC_BASE_PATH` to empty, and remove the base path line in the workflow.
+
+## ☁️ Deploy to Vercel (alternative)
 
 ```bash
 npx vercel
 ```
 
 Add the two `NEXT_PUBLIC_SUPABASE_*` env vars in the Vercel dashboard.
+Vercel uses the server headers from `next.config.mjs` (skipped for the static export).
 
 ---
 

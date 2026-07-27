@@ -159,7 +159,7 @@ insert into public.words (category_id, word) values
   ('movie-characters', 'Vijay Dinanath Chauhan')
   on conflict (category_id, word) do nothing;
 
-insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-movies', 'Tollywood Movies', '🎥', 'Tollywood', 'easy')
+insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-movies', 'Tollywood Blockbusters', '🎥', 'Tollywood', 'easy')
   on conflict (id) do update set name = excluded.name, emoji = excluded.emoji, grp = excluded.grp, difficulty = excluded.difficulty;
 insert into public.words (category_id, word) values
   ('tollywood-movies', 'Baahubali'),
@@ -185,7 +185,46 @@ insert into public.words (category_id, word) values
   ('tollywood-movies', 'Sarileru Neekevvaru'),
   ('tollywood-movies', 'Geetha Govindam'),
   ('tollywood-movies', 'Fidaa'),
-  ('tollywood-movies', 'Mayabazar')
+  ('tollywood-movies', 'Kalki 2898 AD'),
+  ('tollywood-movies', 'Hanu-Man'),
+  ('tollywood-movies', 'Tillu Square'),
+  ('tollywood-movies', 'Sye Raa'),
+  ('tollywood-movies', 'DJ Tillu'),
+  ('tollywood-movies', 'C/o Kancharapalem'),
+  ('tollywood-movies', 'Jersey'),
+  ('tollywood-movies', 'Sarrainodu'),
+  ('tollywood-movies', 'Race Gurram'),
+  ('tollywood-movies', 'Temper'),
+  ('tollywood-movies', 'Legend')
+  on conflict (category_id, word) do nothing;
+
+insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-classics', 'Telugu Classics & Legends', '🎞️', 'Tollywood', 'hard')
+  on conflict (id) do update set name = excluded.name, emoji = excluded.emoji, grp = excluded.grp, difficulty = excluded.difficulty;
+insert into public.words (category_id, word) values
+  ('tollywood-classics', 'Mayabazar'),
+  ('tollywood-classics', 'Pathala Bhairavi'),
+  ('tollywood-classics', 'Missamma'),
+  ('tollywood-classics', 'Gundamma Katha'),
+  ('tollywood-classics', 'Muga Manasulu'),
+  ('tollywood-classics', 'Doctor Chakravarthy'),
+  ('tollywood-classics', 'Ramu'),
+  ('tollywood-classics', 'Bhookailas'),
+  ('tollywood-classics', 'Bobbili Yuddham'),
+  ('tollywood-classics', 'Ramudu Bheemudu'),
+  ('tollywood-classics', 'Maa Bhoomi'),
+  ('tollywood-classics', 'Muthyala Muggu'),
+  ('tollywood-classics', 'Sankarabharanam'),
+  ('tollywood-classics', 'Sagara Sangamam'),
+  ('tollywood-classics', 'Swati Mutyam'),
+  ('tollywood-classics', 'Rudraveena'),
+  ('tollywood-classics', 'Anand'),
+  ('tollywood-classics', 'Mithunam'),
+  ('tollywood-classics', 'Nuvve Kavali'),
+  ('tollywood-classics', 'Murari'),
+  ('tollywood-classics', 'Kshanakshanam'),
+  ('tollywood-classics', 'Shiva'),
+  ('tollywood-classics', 'Money'),
+  ('tollywood-classics', 'Aithe')
   on conflict (category_id, word) do nothing;
 
 insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-heroes', 'Tollywood Heroes', '🦸', 'Tollywood', 'easy')
@@ -210,7 +249,17 @@ insert into public.words (category_id, word) values
   ('tollywood-heroes', 'NT Rama Rao'),
   ('tollywood-heroes', 'Akkineni Nageswara Rao'),
   ('tollywood-heroes', 'Krishna'),
-  ('tollywood-heroes', 'Sai Dharam Tej')
+  ('tollywood-heroes', 'Sai Dharam Tej'),
+  ('tollywood-heroes', 'Varun Tej'),
+  ('tollywood-heroes', 'Sharwanand'),
+  ('tollywood-heroes', 'Adivi Sesh'),
+  ('tollywood-heroes', 'Rana Daggubati'),
+  ('tollywood-heroes', 'Gopichand'),
+  ('tollywood-heroes', 'Siddhu Jonnalagadda'),
+  ('tollywood-heroes', 'Panja Vaisshnav Tej'),
+  ('tollywood-heroes', 'Bellamkonda Sreenivas'),
+  ('tollywood-heroes', 'Raj Tarun'),
+  ('tollywood-heroes', 'Naga Shaurya')
   on conflict (category_id, word) do nothing;
 
 insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-heroines', 'Tollywood Heroines', '💃', 'Tollywood', 'medium')
@@ -235,7 +284,64 @@ insert into public.words (category_id, word) values
   ('tollywood-heroines', 'Krithi Shetty'),
   ('tollywood-heroines', 'Mrunal Thakur'),
   ('tollywood-heroines', 'Anupama Parameswaran'),
-  ('tollywood-heroines', 'Jayasudha')
+  ('tollywood-heroines', 'Jayasudha'),
+  ('tollywood-heroines', 'Sreeleela'),
+  ('tollywood-heroines', 'Trisha'),
+  ('tollywood-heroines', 'Bhanupriya'),
+  ('tollywood-heroines', 'Ramya Krishnan'),
+  ('tollywood-heroines', 'Sobhita Dhulipala'),
+  ('tollywood-heroines', 'Nithya Menen'),
+  ('tollywood-heroines', 'Raveena Tandon')
+  on conflict (category_id, word) do nothing;
+
+insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-villains', 'Tollywood Villains & Actors', '😈', 'Tollywood', 'medium')
+  on conflict (id) do update set name = excluded.name, emoji = excluded.emoji, grp = excluded.grp, difficulty = excluded.difficulty;
+insert into public.words (category_id, word) values
+  ('tollywood-villains', 'Kattappa'),
+  ('tollywood-villains', 'Bhallaladeva'),
+  ('tollywood-villains', 'Jagapathi Babu'),
+  ('tollywood-villains', 'Prakash Raj'),
+  ('tollywood-villains', 'Sonu Sood'),
+  ('tollywood-villains', 'Ashutosh Rana'),
+  ('tollywood-villains', 'Mukesh Rishi'),
+  ('tollywood-villains', 'Rao Ramesh'),
+  ('tollywood-villains', 'Posani Krishna Murali'),
+  ('tollywood-villains', 'Kota Srinivasa Rao'),
+  ('tollywood-villains', 'Tanikella Bharani'),
+  ('tollywood-villains', 'Nasser'),
+  ('tollywood-villains', 'Suman'),
+  ('tollywood-villains', 'Ravi Shankar'),
+  ('tollywood-villains', 'Sampath Raj'),
+  ('tollywood-villains', 'Ajay Ghosh'),
+  ('tollywood-villains', 'Bobby Simha'),
+  ('tollywood-villains', 'Sunil Varma'),
+  ('tollywood-villains', 'Brahmaji'),
+  ('tollywood-villains', 'Ajay')
+  on conflict (category_id, word) do nothing;
+
+insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-comedians', 'Tollywood Comedians', '🤣', 'Tollywood', 'medium')
+  on conflict (id) do update set name = excluded.name, emoji = excluded.emoji, grp = excluded.grp, difficulty = excluded.difficulty;
+insert into public.words (category_id, word) values
+  ('tollywood-comedians', 'Brahmanandam'),
+  ('tollywood-comedians', 'Ali'),
+  ('tollywood-comedians', 'Sunil'),
+  ('tollywood-comedians', 'Vennela Kishore'),
+  ('tollywood-comedians', 'Saptagiri'),
+  ('tollywood-comedians', 'Rajababu'),
+  ('tollywood-comedians', 'Relangi'),
+  ('tollywood-comedians', 'Ramana Reddy'),
+  ('tollywood-comedians', 'Allu Ramalingaiah'),
+  ('tollywood-comedians', 'MS Narayana'),
+  ('tollywood-comedians', 'Krishna Bhagavan'),
+  ('tollywood-comedians', 'Prudhvi Raj'),
+  ('tollywood-comedians', 'Raghu Babu'),
+  ('tollywood-comedians', 'Thagubothu Ramesh'),
+  ('tollywood-comedians', 'Satyam Rajesh'),
+  ('tollywood-comedians', 'Priyadarshi'),
+  ('tollywood-comedians', 'Hyper Aadi'),
+  ('tollywood-comedians', 'Getup Srinu'),
+  ('tollywood-comedians', 'Shakalaka Shankar'),
+  ('tollywood-comedians', 'Sudigali Sudheer')
   on conflict (category_id, word) do nothing;
 
 insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-songs', 'Tollywood Songs', '🎶', 'Tollywood', 'medium')
@@ -260,10 +366,43 @@ insert into public.words (category_id, word) values
   ('tollywood-songs', 'Kevvu Keka'),
   ('tollywood-songs', 'Nee Kannu Neeli Samudram'),
   ('tollywood-songs', 'Kurchi Madathapetti'),
-  ('tollywood-songs', 'Chuttamalle')
+  ('tollywood-songs', 'Chuttamalle'),
+  ('tollywood-songs', 'Oosupodu'),
+  ('tollywood-songs', 'Samayama'),
+  ('tollywood-songs', 'Neeli Neeli Aakasam'),
+  ('tollywood-songs', 'Priyathama Priyathama'),
+  ('tollywood-songs', 'Arere Ye Pilla'),
+  ('tollywood-songs', 'Pilla Puli'),
+  ('tollywood-songs', 'Ekkada Ekkada'),
+  ('tollywood-songs', 'Meghale Lekha')
   on conflict (category_id, word) do nothing;
 
-insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-directors', 'Directors & Composers', '🎬', 'Tollywood', 'hard')
+insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-music', 'Tollywood Music Directors', '🎼', 'Tollywood', 'hard')
+  on conflict (id) do update set name = excluded.name, emoji = excluded.emoji, grp = excluded.grp, difficulty = excluded.difficulty;
+insert into public.words (category_id, word) values
+  ('tollywood-music', 'Devi Sri Prasad'),
+  ('tollywood-music', 'MM Keeravani'),
+  ('tollywood-music', 'Thaman S'),
+  ('tollywood-music', 'Anirudh Ravichander'),
+  ('tollywood-music', 'Ilaiyaraaja'),
+  ('tollywood-music', 'Mani Sharma'),
+  ('tollywood-music', 'Mickey J Meyer'),
+  ('tollywood-music', 'Gopi Sundar'),
+  ('tollywood-music', 'Ravi Basrur'),
+  ('tollywood-music', 'SP Balasubrahmanyam'),
+  ('tollywood-music', 'Shreya Ghoshal'),
+  ('tollywood-music', 'Geetha Madhuri'),
+  ('tollywood-music', 'Sid Sriram'),
+  ('tollywood-music', 'Hemachandra'),
+  ('tollywood-music', 'Anup Rubens'),
+  ('tollywood-music', 'Vishal Chandrasekhar'),
+  ('tollywood-music', 'Pradeep Kumar'),
+  ('tollywood-music', 'Ramya Behara'),
+  ('tollywood-music', 'Karthik'),
+  ('tollywood-music', 'Sunidhi Chauhan')
+  on conflict (category_id, word) do nothing;
+
+insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-directors', 'Tollywood Directors', '🎬', 'Tollywood', 'hard')
   on conflict (id) do update set name = excluded.name, emoji = excluded.emoji, grp = excluded.grp, difficulty = excluded.difficulty;
 insert into public.words (category_id, word) values
   ('tollywood-directors', 'SS Rajamouli'),
@@ -281,11 +420,34 @@ insert into public.words (category_id, word) values
   ('tollywood-directors', 'K Raghavendra Rao'),
   ('tollywood-directors', 'Dasari Narayana Rao'),
   ('tollywood-directors', 'Prashanth Neel'),
-  ('tollywood-directors', 'Devi Sri Prasad'),
-  ('tollywood-directors', 'MM Keeravani'),
-  ('tollywood-directors', 'Thaman S'),
-  ('tollywood-directors', 'Mickey J Meyer'),
-  ('tollywood-directors', 'Anirudh Ravichander')
+  ('tollywood-directors', 'Bapu'),
+  ('tollywood-directors', 'Jandhyala'),
+  ('tollywood-directors', 'Vamsi'),
+  ('tollywood-directors', 'Krish Jagarlamudi'),
+  ('tollywood-directors', 'Hanu Raghavapudi'),
+  ('tollywood-directors', 'Vivek Athreya'),
+  ('tollywood-directors', 'Maruthi')
+  on conflict (category_id, word) do nothing;
+
+insert into public.categories (id, name, emoji, grp, difficulty) values ('tollywood-pairs', 'Iconic Telugu Pairs', '💞', 'Tollywood', 'medium')
+  on conflict (id) do update set name = excluded.name, emoji = excluded.emoji, grp = excluded.grp, difficulty = excluded.difficulty;
+insert into public.words (category_id, word) values
+  ('tollywood-pairs', 'Prabhas & Anushka'),
+  ('tollywood-pairs', 'Jr NTR & Samantha'),
+  ('tollywood-pairs', 'Mahesh Babu & Trisha'),
+  ('tollywood-pairs', 'Allu Arjun & Pooja Hegde'),
+  ('tollywood-pairs', 'Naga Chaitanya & Samantha'),
+  ('tollywood-pairs', 'Chiranjeevi & Radhika'),
+  ('tollywood-pairs', 'Venkatesh & Meena'),
+  ('tollywood-pairs', 'Nagarjuna & Tabu'),
+  ('tollywood-pairs', 'Pawan Kalyan & Ileana'),
+  ('tollywood-pairs', 'Nani & Nithya Menen'),
+  ('tollywood-pairs', 'Ram Charan & Rakul Preet Singh'),
+  ('tollywood-pairs', 'Ravi Teja & Ileana'),
+  ('tollywood-pairs', 'Balakrishna & Simran'),
+  ('tollywood-pairs', 'Adivi Sesh & Aditi Rao'),
+  ('tollywood-pairs', 'Vijay Deverakonda & Rashmika'),
+  ('tollywood-pairs', 'Sai Dharam Tej & Anupama')
   on conflict (category_id, word) do nothing;
 
 insert into public.categories (id, name, emoji, grp, difficulty) values ('cricket-legends', 'Cricket Legends', '🏏', 'Cricket', 'easy')
