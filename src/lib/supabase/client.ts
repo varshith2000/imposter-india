@@ -45,3 +45,10 @@ export async function ensureSession() {
   }
   return anon.session;
 }
+
+/** Sign the current user out of Supabase auth (Google / email / anonymous). */
+export async function signOut() {
+  const sb = getSupabase();
+  if (!sb) return;
+  await sb.auth.signOut();
+}

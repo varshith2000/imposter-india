@@ -147,7 +147,7 @@ function CreateRoomInner() {
                 <button key={d} onClick={() => { playSfx("click"); setSettings((s) => ({ ...s, difficulty: d })); }}
                   className={cn(
                     "flex-1 rounded-xl px-2 py-2 text-sm font-semibold capitalize transition focus-ring",
-                    settings.difficulty === d ? "bg-india-gradient text-white shadow-glow-pink" : "glass text-white/60",
+                    settings.difficulty === d ? "bg-rose text-white" : "glass text-white/60",
                   )}>
                   {d}
                 </button>
@@ -194,7 +194,7 @@ function CreateRoomInner() {
                       className={cn(
                         "rounded-full px-3 py-1.5 text-xs font-semibold transition focus-ring tap-highlight-none",
                         settings.categoryIds.includes(c.id)
-                          ? "bg-india-gradient text-white shadow-glow-pink"
+                          ? "bg-rose text-white"
                           : "glass text-white/60 hover:text-white",
                       )}>
                       {c.emoji} {c.name}

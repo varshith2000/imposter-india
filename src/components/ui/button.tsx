@@ -10,15 +10,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary:
-          "bg-india-gradient bg-[length:200%_200%] animate-gradient-x text-white shadow-glow-pink hover:brightness-110",
-        royal: "bg-royal-gradient text-white shadow-glow hover:brightness-110",
-        sunset: "bg-sunset-gradient text-white shadow-glow-orange hover:brightness-110",
+        primary: "bg-rose text-white shadow-md shadow-rose/25 hover:bg-rose/90",
+        royal: "bg-primary text-white shadow-md shadow-primary/25 hover:bg-primary/90",
+        sunset: "bg-saffron text-white shadow-md shadow-saffron/25 hover:bg-saffron/90",
         glass: "glass text-white hover:bg-white/[0.1] hover:border-white/20",
         ghost: "text-white/80 hover:text-white hover:bg-white/[0.06]",
         outline: "border border-white/20 text-white hover:bg-white/[0.06]",
-        danger: "bg-danger/90 text-white hover:bg-danger shadow-[0_0_30px_-8px_rgba(255,77,94,0.5)]",
-        gold: "bg-gradient-to-br from-gold to-saffron text-black shadow-glow-orange hover:brightness-110",
+        danger: "bg-danger text-white shadow-md shadow-danger/25 hover:bg-danger/90",
+        gold: "bg-gold text-black shadow-md shadow-gold/25 hover:bg-gold/90",
       },
       size: {
         sm: "h-9 px-4 text-sm rounded-xl",

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, Coins, Lock, Pencil, Trophy } from "lucide-react";
+import { ArrowLeft, Coins, Loader2, Lock, LogOut, Pencil, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassCard, Badge, Progress, Skeleton } from "@/components/ui/card";
 import { Input, Modal } from "@/components/ui/controls";
@@ -15,12 +16,42 @@ import { getCategoryById } from "@/lib/data/categories";
 import { formatNumber, timeAgo, cn } from "@/lib/utils";
 import { playSfx } from "@/lib/sound";
 import { fireConfetti } from "@/components/effects/confetti";
+import { getSupabase, isSupabaseConfigured, signOut } from "@/lib/supabase/client";
 
 export default function ProfilePage() {
   const profile = useProfile();
+  const router = useRouter();
   const [editOpen, setEditOpen] = useState(false);
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [nameDraft, setNameDraft] = useState("");
+  const [signedIn, setSignedIn] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
+
+  // Detect whether the user has a real Supabase auth session (Google/email/anonymous).
+  useEffect(() => {
+    const sb = getSupabase();
+    if (!sb) return;
+    let active = true;
+    sb.auth.getSession().then(({ data }) => {
+      if (active) setSignedIn(Boolean(data.session));
+    });
+    const { data: sub } = sb.auth.onAuthStateChange((_e, session) => {
+      setSignedIn(Boolean(session));
+    });
+    return () => {
+      active = false;
+      sub.subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleSignOut = async () => {
+    setSigningOut(true);
+    await signOut();
+    updateProfile((p) => ({ ...p, isGuest: true }));
+    playSfx("click");
+    setSigningOut(false);
+    router.push("/");
+  };
 
   if (!profile) {
     return (
@@ -193,6 +224,28 @@ export default function ProfilePage() {
             </div>
           ))}
         </GlassCard>
+      )}
+
+      {/* Account / sign out */}
+      {isSupabaseConfigured && (
+        <div className="mt-6">
+          {signedIn ? (
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full text-danger hover:bg-danger/10 hover:border-danger/40"
+              onClick={handleSignOut}
+              disabled={signingOut}
+            >
+              {signingOut ? <Loader2 className="animate-spin" size={17} aria-hidden /> : <LogOut size={17} aria-hidden />}
+              {signingOut ? "Signing out…" : "Sign out"}
+            </Button>
+          ) : (
+            <Button asChild variant="primary" size="lg" className="w-full">
+              <Link href="/login">Sign in to save progress</Link>
+            </Button>
+          )}
+        </div>
       )}
 
       {/* Edit name modal */}
