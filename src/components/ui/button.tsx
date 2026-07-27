@@ -36,32 +36,70 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   silent?: boolean;
+  /** Render as the single child element (e.g. <Button asChild><Link/></Button>)
+   *  instead of a <button>. Avoids invalid <a><button> nesting that breaks clicks. */
+  asChild?: boolean;
 }
 
+/**
+ * Minimal Slot: clones the child element, merging className + onClick so the
+ * Button's styling & ripple land on the child (e.g. a next/link <a>).
+ */
+const Slot = ({
+  children,
+  className,
+  onClick,
+  ...rest
+}: React.HTMLAttributes<HTMLElement> & { children?: React.ReactNode }) => {
+  if (React.isValidElement(children)) {
+    const childProps = (children as React.ReactElement<Record<string, unknown>>).props;
+    return React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
+      ...rest,
+      ...childProps,
+      className: cn(className, childProps.className as string | undefined),
+      onClick: (e: React.MouseEvent<HTMLElement>) => {
+        (childProps.onClick as ((e: React.MouseEvent<HTMLElement>) => void) | undefined)?.(e);
+        onClick?.(e);
+      },
+    });
+  }
+  return null;
+};
+
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, silent, onClick, ...props }, ref) => {
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  ({ className, variant, size, silent, asChild, onClick, children, ...props }, ref) => {
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
       if (!silent) playSfx("click");
       // ripple ink
       const btn = e.currentTarget;
       const ink = document.createElement("span");
       ink.className = "ripple-ink";
       const rect = btn.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      ink.style.width = ink.style.height = `${size}px`;
-      ink.style.left = `${e.clientX - rect.left - size / 2}px`;
-      ink.style.top = `${e.clientY - rect.top - size / 2}px`;
+      const sz = Math.max(rect.width, rect.height);
+      ink.style.width = ink.style.height = `${sz}px`;
+      ink.style.left = `${e.clientX - rect.left - sz / 2}px`;
+      ink.style.top = `${e.clientY - rect.top - sz / 2}px`;
       btn.appendChild(ink);
       setTimeout(() => ink.remove(), 650);
-      onClick?.(e);
+      onClick?.(e as React.MouseEvent<HTMLButtonElement>);
     };
+    const cls = cn(buttonVariants({ variant, size }), className);
+    if (asChild) {
+      return (
+        <Slot className={cls} onClick={handleClick} {...props}>
+          {children}
+        </Slot>
+      );
+    }
     return (
       <button
         ref={ref}
-        className={cn(buttonVariants({ variant, size }), className)}
-        onClick={handleClick}
+        className={cls}
+        onClick={handleClick as React.MouseEventHandler<HTMLButtonElement>}
         {...props}
-      />
+      >
+        {children}
+      </button>
     );
   },
 );

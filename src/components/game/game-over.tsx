@@ -183,11 +183,11 @@ export function GameOverScreen({
         <Button variant="glass" onClick={share}>
           <Share2 size={16} aria-hidden /> Share Result
         </Button>
-        <Link href="/room/create" className="contents">
-          <Button variant="glass">
+        <Button asChild variant="glass">
+          <Link href="/room/create">
             <Plus size={16} aria-hidden /> New Room
-          </Button>
-        </Link>
+          </Link>
+        </Button>
         <Button variant="ghost" className="col-span-2" onClick={onExit}>
           <Home size={16} aria-hidden /> Exit to Home
         </Button>

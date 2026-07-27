@@ -170,9 +170,9 @@ export default function ProfilePage() {
         <GlassCard className="py-8 text-center">
           <p className="mb-2 text-4xl" aria-hidden>🎮</p>
           <p className="text-sm text-white/50">No matches yet. Play your first game!</p>
-          <Link href="/play" className="mt-4 inline-block">
-            <Button variant="primary">Play Now</Button>
-          </Link>
+          <Button asChild variant="primary" className="mt-4">
+            <Link href="/play">Play Now</Link>
+          </Button>
         </GlassCard>
       ) : (
         <GlassCard className="divide-y divide-white/[0.06] p-2">

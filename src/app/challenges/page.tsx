@@ -132,11 +132,9 @@ export default function ChallengesPage() {
         ⏰ Challenges reset at midnight. Naya din, naye challenges!
       </motion.p>
 
-      <Link href="/play" className="mt-4 block">
-        <Button variant="primary" size="xl" className="w-full font-display">
-          🎮 Play to Complete
-        </Button>
-      </Link>
+      <Button asChild variant="primary" size="xl" className="mt-4 w-full font-display">
+        <Link href="/play">🎮 Play to Complete</Link>
+      </Button>
     </main>
   );
 }

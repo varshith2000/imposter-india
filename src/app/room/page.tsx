@@ -109,8 +109,8 @@ function RoomInner() {
         <h1 className="font-display text-2xl font-bold">No room code</h1>
         <p className="mt-2 text-white/50">Enter a code to join a room, or create your own!</p>
         <div className="mt-6 flex justify-center gap-3">
-          <Link href="/room/join"><Button variant="primary">Join Room</Button></Link>
-          <Link href="/room/create"><Button variant="glass">Create Room</Button></Link>
+          <Button asChild variant="primary"><Link href="/room/join">Join Room</Link></Button>
+          <Button asChild variant="glass"><Link href="/room/create">Create Room</Link></Button>
         </div>
       </CenterShell>
     );
@@ -125,8 +125,8 @@ function RoomInner() {
           Add your Supabase keys to <code className="text-gold">.env.local</code> (see README), or try Practice Mode!
         </p>
         <div className="mt-6 flex justify-center gap-3">
-          <Link href="/practice"><Button variant="primary">🤖 Practice vs Bots</Button></Link>
-          <Link href="/"><Button variant="glass">Home</Button></Link>
+          <Button asChild variant="primary"><Link href="/practice">🤖 Practice vs Bots</Link></Button>
+          <Button asChild variant="glass"><Link href="/">Home</Link></Button>
         </div>
       </CenterShell>
     );
@@ -144,8 +144,8 @@ function RoomInner() {
         <h1 className="font-display text-2xl font-bold">Oops!</h1>
         <p className="mt-2 text-white/50">{friendly}</p>
         <div className="mt-6 flex justify-center gap-3">
-          <Link href="/room/join"><Button variant="primary">Try Again</Button></Link>
-          <Link href="/"><Button variant="glass">Home</Button></Link>
+          <Button asChild variant="primary"><Link href="/room/join">Try Again</Link></Button>
+          <Button asChild variant="glass"><Link href="/">Home</Link></Button>
         </div>
       </CenterShell>
     );

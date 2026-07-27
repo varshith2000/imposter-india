@@ -99,11 +99,11 @@ export default function HowToPlayPage() {
         </GlassCard>
       </motion.div>
 
-      <Link href="/play" className="mt-6 block">
-        <Button variant="primary" size="xl" className="w-full font-display">
+      <Button asChild variant="primary" size="xl" className="mt-6 w-full font-display">
+        <Link href="/play">
           <Play className="fill-current" aria-hidden /> Let&apos;s Play!
-        </Button>
-      </Link>
+        </Link>
+      </Button>
     </main>
   );
 }

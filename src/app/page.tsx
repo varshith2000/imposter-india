@@ -149,11 +149,11 @@ export default function HomePage() {
           )}
 
           {/* Big Play */}
-          <Link href="/play" className="block">
-            <Button variant="primary" size="xl" className="w-full animate-pulse-glow font-display text-xl">
+          <Button asChild variant="primary" size="xl" className="w-full animate-pulse-glow font-display text-xl">
+            <Link href="/play">
               <Play className="fill-current" aria-hidden /> PLAY NOW
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </motion.section>
 
