@@ -94,7 +94,14 @@ export function loadProfile(): PlayerProfile {
 export function saveProfile(p: PlayerProfile) {
   if (typeof window === "undefined") return;
   localStorage.setItem(KEY, JSON.stringify(p));
-  window.dispatchEvent(new CustomEvent("wti-profile-updated"));
+  // Notify other hooks/components — but DEFERED. saveProfile is often called
+  // from inside a useEffect (e.g. the home page's daily-login bonus). Firing
+  // this event synchronously re-enters useProfile's listener and triggers a
+  // setState during React's commit phase, which — under the Next.js App Router
+  // static export — corrupts client-side navigation and leaves link click
+  // handlers detached. Scheduling on the next macrotask keeps it out of the
+  // current commit while still updating the UI promptly.
+  setTimeout(() => window.dispatchEvent(new CustomEvent("wti-profile-updated")), 0);
 }
 
 export function updateProfile(fn: (p: PlayerProfile) => PlayerProfile): PlayerProfile {

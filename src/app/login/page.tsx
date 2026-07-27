@@ -13,6 +13,11 @@ import { updateProfile } from "@/lib/profile";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { playSfx } from "@/lib/sound";
 
+// Base path is inlined at build time ("" locally / on Vercel, "/<repo>" on GitHub Pages).
+// Must be included in OAuth/magic-link redirect URLs so the user lands back
+// inside the app, not at the GitHub Pages root (which 404s).
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 type Status = "idle" | "loading" | "sent" | "error";
 
 export default function LoginPage() {
@@ -32,7 +37,7 @@ export default function LoginPage() {
     setStatus("loading");
     const { error } = await sb.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/` },
+      options: { redirectTo: `${window.location.origin}${BASE_PATH}/` },
     });
     if (error) {
       setErrorMsg(error.message);
@@ -46,7 +51,7 @@ export default function LoginPage() {
     setStatus("loading");
     const { error } = await sb.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}/` },
+      options: { emailRedirectTo: `${window.location.origin}${BASE_PATH}/` },
     });
     if (error) {
       setErrorMsg(error.message);
