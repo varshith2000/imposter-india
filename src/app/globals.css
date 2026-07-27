@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-background text-white font-body antialiased;
+  background-image:
+    radial-gradient(1200px 600px at 85% -10%, hsl(265 90% 40% / 0.22), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(255, 122, 26, 0.14), transparent 55%),
+    radial-gradient(800px 600px at 50% 110%, rgba(255, 61, 129, 0.12), transparent 60%);
+  background-attachment: fixed;
+  overscroll-behavior-y: none;
+}
+
+::selection {
+  @apply bg-primary/50 text-white;
+}
+
+/* ---------- Glass components ---------- */
+@layer components {
+  .glass {
+    @apply bg-white/[0.05] backdrop-blur-xl border border-white/10 shadow-glass;
+  }
+  .glass-strong {
+    @apply bg-white/[0.08] backdrop-blur-2xl border border-white/[0.14] shadow-glass;
+  }
+  .glass-card {
+    @apply glass rounded-3xl;
+  }
+  .text-gradient {
+    @apply bg-india-gradient bg-clip-text text-transparent;
+  }
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #ffc94a, #ff7a1a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .tap-highlight-none {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .skeleton {
+    @apply relative overflow-hidden rounded-xl bg-white/[0.06];
+  }
+  .skeleton::after {
+    content: "";
+    @apply absolute inset-0 animate-shimmer;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.08),
+      transparent
+    );
+    background-size: 700px 100%;
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/20;
+}
+
+/* ---------- Accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+}
+
+/* User-toggleable accessibility modes (see /settings) */
+html.large-text {
+  font-size: 112.5%;
+}
+html.high-contrast body {
+  background-image: none;
+  @apply bg-black;
+}
+html.high-contrast .glass,
+html.high-contrast .glass-strong {
+  @apply bg-black border-white/40;
+}
+html.high-contrast .text-white\/50,
+html.high-contrast .text-white\/55,
+html.high-contrast .text-white\/60 {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Ripple effect */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+.ripple span.ripple-ink {
+  position: absolute;
+  border-radius: 9999px;
+  transform: scale(0);
+  animation: ripple-anim 600ms ease-out;
+  background: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+@keyframes ripple-anim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
