@@ -5,6 +5,13 @@
 -- ============================================================================
 
 -- ---------------------------------------------------------------------------
+-- EXTENSIONS
+-- pgcrypto provides gen_random_bytes(), used by create_room to mint room codes.
+-- (gen_random_uuid() is built-in, but gen_random_bytes is not.)
+-- ---------------------------------------------------------------------------
+create extension if not exists pgcrypto;
+
+-- ---------------------------------------------------------------------------
 -- PROFILES
 -- ---------------------------------------------------------------------------
 create table if not exists public.profiles (
