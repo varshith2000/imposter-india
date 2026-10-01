@@ -79,6 +79,7 @@ create table if not exists public.words (
   id bigint generated always as identity primary key,
   category_id text not null references public.categories(id) on delete cascade,
   word text not null,
+  hint text,
   is_active boolean not null default true,
   unique (category_id, word)
 );
@@ -129,6 +130,7 @@ create table if not exists public.player_secrets (
   round integer not null,
   role text not null check (role in ('crew','imposter')),
   secret_word text, -- null for imposters
+  hint text, -- word-specific hint for crew, null for imposters
   primary key (room_id, user_id, round)
 );
 
@@ -360,6 +362,7 @@ declare
   v_imposters uuid[];
   v_imposter_count int;
   v_word text;
+  v_hint text;
   v_cat_id text;
   v_cat_name text;
   v_uid uuid;
@@ -376,7 +379,7 @@ begin
   -- pick category & word (honours the host's chosen topics + difficulty)
   select array(select jsonb_array_elements_text(coalesce(v_room.settings->'categoryIds', '[]'::jsonb))) into v_cat_ids;
   v_difficulty := coalesce(v_room.settings->>'difficulty', 'mixed');
-  select w.word, c.id, c.name into v_word, v_cat_id, v_cat_name
+  select w.word, w.hint, c.id, c.name into v_word, v_hint, v_cat_id, v_cat_name
   from words w join categories c on c.id = w.category_id
   where w.is_active and c.is_active
     and (cardinality(v_cat_ids) = 0 or c.id = any(v_cat_ids))
@@ -384,7 +387,7 @@ begin
   order by random() limit 1;
   -- fallback: relax the difficulty filter if that combo has no words
   if v_word is null then
-    select w.word, c.id, c.name into v_word, v_cat_id, v_cat_name
+    select w.word, w.hint, c.id, c.name into v_word, v_hint, v_cat_id, v_cat_name
     from words w join categories c on c.id = w.category_id
     where w.is_active and c.is_active
       and (cardinality(v_cat_ids) = 0 or c.id = any(v_cat_ids))
@@ -404,11 +407,12 @@ begin
   delete from player_secrets where room_id = p_room_id;
 
   foreach v_uid in array v_players loop
-    insert into player_secrets (room_id, user_id, round, role, secret_word)
+    insert into player_secrets (room_id, user_id, round, role, secret_word, hint)
     values (
       p_room_id, v_uid, v_room.round + 1,
       case when v_uid = any(v_imposters) then 'imposter' else 'crew' end,
-      case when v_uid = any(v_imposters) then null else v_word end
+      case when v_uid = any(v_imposters) then null else v_word end,
+      case when v_uid = any(v_imposters) then null else v_hint end
     );
   end loop;
 
@@ -549,8 +553,8 @@ begin
   if v_room.host_id <> auth.uid() then raise exception 'ONLY_HOST'; end if;
   if v_room.phase <> 'vote-reveal' then raise exception 'BAD_PHASE'; end if;
   -- carry secrets forward into next voting round
-  insert into player_secrets (room_id, user_id, round, role, secret_word)
-  select room_id, user_id, v_room.round + 1, role, secret_word
+  insert into player_secrets (room_id, user_id, round, role, secret_word, hint)
+  select room_id, user_id, v_room.round + 1, role, secret_word, hint
   from player_secrets where room_id = p_room_id and round = v_room.round
   on conflict do nothing;
   update rooms set phase = 'discussion', round = round + 1, updated_at = now()

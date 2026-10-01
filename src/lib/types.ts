@@ -66,6 +66,7 @@ export interface GameState {
   categoryId?: string;
   categoryName?: string;
   secretWord?: string; // only for crew (self)
+  hint?: string; // word-specific hint for crew
   myRole?: Role;
   imposterIds: string[]; // revealed at end
   votes: VoteRecord[];

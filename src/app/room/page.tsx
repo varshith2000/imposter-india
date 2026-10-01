@@ -246,6 +246,7 @@ function RoomInner() {
           role={state.myRole}
           word={state.secretWord}
           categoryName={state.categoryName}
+          hint={state.hint}
           onDone={() => setReady(true)}
         />
       )}

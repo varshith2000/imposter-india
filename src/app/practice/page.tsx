@@ -64,6 +64,7 @@ interface PracticeState {
   round: number;
   players: GamePlayer[];
   word: string;
+  hint: string;
   categoryId: string;
   categoryName: string;
   imposterIds: string[];
@@ -125,6 +126,7 @@ export default function PracticePage() {
       round: 1,
       players,
       word: setup.word,
+      hint: setup.hint,
       categoryId: setup.category.id,
       categoryName: setup.category.name,
       imposterIds: setup.imposterIds,
@@ -401,6 +403,7 @@ export default function PracticePage() {
           role={mySecretRole}
           word={game.word}
           categoryName={game.categoryName}
+          hint={game.hint}
           onDone={beginDiscussion}
         />
       )}

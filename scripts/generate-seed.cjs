@@ -25,9 +25,9 @@ let sql = `-- Auto-generated from src/lib/data/categories.ts — do not edit by 
 for (const c of CATEGORIES) {
   sql += `insert into public.categories (id, name, emoji, grp, difficulty) values ('${esc(c.id)}', '${esc(c.name)}', '${esc(c.emoji)}', '${esc(c.group)}', '${esc(c.difficulty)}')
   on conflict (id) do update set name = excluded.name, emoji = excluded.emoji, grp = excluded.grp, difficulty = excluded.difficulty;\n`;
-  sql += `insert into public.words (category_id, word) values\n`;
-  sql += c.words.map((w) => `  ('${esc(c.id)}', '${esc(w)}')`).join(",\n");
-  sql += `\n  on conflict (category_id, word) do nothing;\n\n`;
+  sql += `insert into public.words (category_id, word, hint) values\n`;
+  sql += c.words.map((w) => `  ('${esc(c.id)}', '${esc(w.word)}', '${esc(w.hint || '')}')`).join(",\n");
+  sql += `\n  on conflict (category_id, word) do update set hint = excluded.hint;\n\n`;
 }
 
 writeFileSync(path.join(root, "supabase/seed.sql"), sql);

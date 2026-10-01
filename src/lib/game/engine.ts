@@ -10,6 +10,7 @@ import type { GamePlayer, RoomSettings, RoundResult, VoteRecord, Winner, XpBreak
 export interface RoundSetup {
   category: Category;
   word: string;
+  hint: string;
   imposterIds: string[];
 }
 
@@ -22,10 +23,12 @@ export function setupRound(players: GamePlayer[], settings: RoomSettings): Round
   const eligible =
     settings.difficulty === "mixed" ? pool : pool.filter((c) => c.difficulty === settings.difficulty);
   const category = pick(eligible.length ? eligible : pool);
-  const word = pick(category.words);
+  const wordWithHint = pick(category.words);
+  const word = wordWithHint.word;
+  const hint = wordWithHint.hint;
   const imposterCount = Math.min(settings.imposters, Math.floor(players.length / 3) || 1);
   const imposterIds = shuffle(players.map((p) => p.id)).slice(0, imposterCount);
-  return { category, word, imposterIds };
+  return { category, word, hint, imposterIds };
 }
 
 /** Tally votes. Highest voted player is eliminated; ties eliminate no one. */

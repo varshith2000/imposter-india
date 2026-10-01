@@ -26,6 +26,7 @@ export interface OnlineRoomState {
   categoryName?: string;
   myRole?: "crew" | "imposter";
   secretWord?: string;
+  hint?: string;
   votes: VoteRecord[];
   lastResult: { eliminatedId: string | null; wasImposter: boolean; tie: boolean } | null;
   winner: Winner;
@@ -71,10 +72,11 @@ export function useOnlineRoom(code: string) {
     // my secret for current round
     let myRole: "crew" | "imposter" | undefined;
     let secretWord: string | undefined;
+    let hint: string | undefined;
     if (uid && room.round > 0) {
       const { data: secret } = await sb
         .from("player_secrets")
-        .select("role, secret_word")
+        .select("role, secret_word, hint")
         .eq("room_id", roomId)
         .eq("user_id", uid)
         .eq("round", room.round)
@@ -82,6 +84,7 @@ export function useOnlineRoom(code: string) {
       if (secret) {
         myRole = secret.role;
         secretWord = secret.secret_word ?? undefined;
+        hint = secret.hint ?? undefined;
       }
     }
 
@@ -112,6 +115,7 @@ export function useOnlineRoom(code: string) {
       isHost: uid === room.host_id,
       myRole,
       secretWord,
+      hint,
       // instant replay: wipe last game's chat & revealed imposters when a new game starts
       chat: room.phase === "word-reveal" && s.phase !== "word-reveal" ? [] : s.chat,
       imposterIds: room.phase === "game-over" ? s.imposterIds : [],

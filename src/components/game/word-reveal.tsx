@@ -12,11 +12,13 @@ export function WordRevealCard({
   role,
   word,
   categoryName,
+  hint,
   onDone,
 }: {
   role: Role;
   word?: string;
   categoryName?: string;
+  hint?: string;
   onDone: () => void;
 }) {
   const [flipped, setFlipped] = useState(false);
@@ -92,8 +94,8 @@ export function WordRevealCard({
                 <p className="text-center font-display text-3xl font-extrabold text-gradient-gold break-words max-w-full">
                   {word}
                 </p>
-                {categoryName && (
-                  <p className="rounded-full bg-white/10 px-4 py-1.5 text-sm text-white/70">{categoryName}</p>
+                {hint && (
+                  <p className="rounded-full bg-white/10 px-4 py-1.5 text-sm text-white/70">{hint}</p>
                 )}
                 <p className="text-center text-xs text-white/50">
                   Give clever hints — not too obvious, or the imposter will catch on!
